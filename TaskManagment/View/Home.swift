@@ -5,6 +5,11 @@ struct Home: View {
     @StateObject var taskModel = TaskViewModel()
     @Namespace var animation
     
+    // MARK: Core Data Context
+    @Environment(\.managedObjectContext) var context
+    //MARK: Edit Button Context
+    @Environment(\.editMode) var editButton
+
     var body: some View {
         
         ScrollView(.vertical, showsIndicators: false) {
@@ -105,10 +110,20 @@ struct Home: View {
     func taskCardView(task: Task) -> some View {
         
         // MARK: Since Core Data values will give optional data
-        HStack(alignment: .top, spacing: 30) {
-            VStack(spacing: 10) {
+        HStack(alignment: editButton?.wrappedValue == .active ? .center : .top, spacing: 30) {
+            
+            if editButton?.wrappedValue == .active {
+                Button {
+                    // Deleting Task
+                } label: {
+                    Image(systemName: "minus.circle.fill")
+                        .font(.title2)
+                        .foregroundColor(.red)
+                }
+            } else {
+                VStack(spacing: 10) {
                 Circle()
-                    .fill(taskModel.isCurrentHour(date: task.taskDate ?? Date()) ? .black : .clear)
+                    .fill(taskModel.isCurrentHour(date: task.taskDate ?? Date()) ? (task.isCompleted ? .green : .black) : .clear)
                     .frame(width: 15, height: 15)
                     .background {
                         Circle()
@@ -121,7 +136,7 @@ struct Home: View {
                     .fill(.black)
                     .frame(width: 3)
             }
-            
+            }
             VStack {
                 
                 HStack(alignment: .top, spacing: 10) {
@@ -142,34 +157,30 @@ struct Home: View {
                 
                 if taskModel.isCurrentHour(date: task.taskDate ?? Date()) {
                     
-                    // MARK: Team Memnbers
-                    HStack(spacing: 0) {
-                        
-                        HStack(spacing: -10) {
-                            
-                            ForEach(1..<4) { _ in
-                                Image("Profile")
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 45, height: 45)
-                                    .clipShape(Circle())
-                                    .background {
-                                        Circle()
-                                            .stroke(.black, lineWidth: 5)
-                                    }
-                            }
-                        }
-                        .hLeading()
+                    // MARK: Team Members
+                    HStack(spacing: 12) {
                         
                         // MARK: Check Button
-                        Button {
+                        if !task.isCompleted {
                             
-                        } label: {
-                            Image(systemName: "checkmark")
-                                .foregroundStyle(.black)
-                                .padding(10)
-                                .background(Color.white, in: RoundedRectangle(cornerRadius: 10))
+                            Button {
+                                // Updating status
+                                task.isCompleted = true
+                                
+                                // Saving
+                                try? context.save()
+                            } label: {
+                                Image(systemName: "checkmark")
+                                    .foregroundStyle(.black)
+                                    .padding(10)
+                                    .background(Color.white, in: RoundedRectangle(cornerRadius: 10))
+                            }
                         }
+                        
+                        Text(task.isCompleted ? "Завершено" : "Пометить как завершенную")
+                            .font(.system(size: 14, weight: .light))
+                            .foregroundColor(task.isCompleted ? .gray : .white)
+                            .hLeading()
                     }
                     .padding(.top)
                 }
@@ -187,7 +198,7 @@ struct Home: View {
         .hLeading()
     }
     
-    // MARK: Заголовок
+    // MARK: - Header
     func headerView() -> some View {
         
         HStack(spacing: 10) {
@@ -200,15 +211,8 @@ struct Home: View {
             }
             .hLeading()
             
-            Button {
-                
-            } label: {
-                Image("Profile")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 45, height: 45)
-                    .clipShape(Circle())
-            }
+            // MARK: Edit Button
+            EditButton()
         }
         .padding()
         .padding(.top, getSafeArea().top)
