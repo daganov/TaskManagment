@@ -16,6 +16,8 @@ struct NewTask: View {
     @State var taskDescription = ""
     @State var taskDate = Date()
     
+    @Environment(\.managedObjectContext) var context
+    
     var body: some View {
         NavigationView {
             List {
@@ -49,7 +51,15 @@ struct NewTask: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Сохранить") {
+                        let task = Task(context: context)
+                        task.taskTitle = taskTitle
+                        task.taskDescription = taskDescription
+                        task.taskDate = taskDate
                         
+                        // Saving
+                        try? context.save()
+                        // Dismissing View
+                        dismiss()
                     }
                     .disabled(taskTitle == "" || taskDescription == "")
                 }
