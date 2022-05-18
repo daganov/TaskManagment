@@ -13,6 +13,10 @@
 		8B881B9C283565A600DF40C6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B881B9B283565A600DF40C6 /* Preview Assets.xcassets */; };
 		8B881B9E283565A600DF40C6 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B881B9D283565A600DF40C6 /* Persistence.swift */; };
 		8B881BA1283565A600DF40C6 /* TaskManagment.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8B881B9F283565A600DF40C6 /* TaskManagment.xcdatamodeld */; };
+		8B881BAA283567A100DF40C6 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B881BA9283567A100DF40C6 /* Home.swift */; };
+		8B881BAC283567AB00DF40C6 /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B881BAB283567AB00DF40C6 /* TaskViewModel.swift */; };
+		8B881BAE28356AE500DF40C6 /* DynamicFilteredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B881BAD28356AE500DF40C6 /* DynamicFilteredView.swift */; };
+		8B881BB028356E9700DF40C6 /* NewTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B881BAF28356E9700DF40C6 /* NewTask.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +27,10 @@
 		8B881B9B283565A600DF40C6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		8B881B9D283565A600DF40C6 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		8B881BA0283565A600DF40C6 /* TaskManagment.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TaskManagment.xcdatamodel; sourceTree = "<group>"; };
+		8B881BA9283567A100DF40C6 /* Home.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		8B881BAB283567AB00DF40C6 /* TaskViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskViewModel.swift; sourceTree = "<group>"; };
+		8B881BAD28356AE500DF40C6 /* DynamicFilteredView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicFilteredView.swift; sourceTree = "<group>"; };
+		8B881BAF28356E9700DF40C6 /* NewTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTask.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +63,8 @@
 		8B881B93283565A500DF40C6 /* TaskManagment */ = {
 			isa = PBXGroup;
 			children = (
+				8B881BA82835676F00DF40C6 /* ViewModel */,
+				8B881BA72835676A00DF40C6 /* View */,
 				8B881B94283565A500DF40C6 /* TaskManagmentApp.swift */,
 				8B881B96283565A500DF40C6 /* ContentView.swift */,
 				8B881B98283565A600DF40C6 /* Assets.xcassets */,
@@ -71,6 +81,24 @@
 				8B881B9B283565A600DF40C6 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		8B881BA72835676A00DF40C6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8B881BA9283567A100DF40C6 /* Home.swift */,
+				8B881BAD28356AE500DF40C6 /* DynamicFilteredView.swift */,
+				8B881BAF28356E9700DF40C6 /* NewTask.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		8B881BA82835676F00DF40C6 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				8B881BAB283567AB00DF40C6 /* TaskViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -144,7 +172,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B881B9E283565A600DF40C6 /* Persistence.swift in Sources */,
+				8B881BAE28356AE500DF40C6 /* DynamicFilteredView.swift in Sources */,
+				8B881BAC283567AB00DF40C6 /* TaskViewModel.swift in Sources */,
 				8B881BA1283565A600DF40C6 /* TaskManagment.xcdatamodeld in Sources */,
+				8B881BAA283567A100DF40C6 /* Home.swift in Sources */,
+				8B881BB028356E9700DF40C6 /* NewTask.swift in Sources */,
 				8B881B97283565A500DF40C6 /* ContentView.swift in Sources */,
 				8B881B95283565A500DF40C6 /* TaskManagmentApp.swift in Sources */,
 			);
