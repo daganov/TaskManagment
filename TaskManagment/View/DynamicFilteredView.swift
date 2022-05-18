@@ -6,15 +6,34 @@
 //
 
 import SwiftUI
+import CoreData
 
-struct DynamicFilteredView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+struct DynamicFilteredView<Content: View, T>: View where T: NSManagedObject {
+    
+    // MARK: - Core Data request
+    @FetchRequest var request: FetchedResults<T>
+    let content: (T) -> Content
+    
+    // MARK: - Building custom ForEach which will give CoreData object to Build View
+    init(dateToFilter: Date, @ViewBuilder content: @escaping (T) -> Content) {
+        
+        // Initializing Request with NSPredicate
+        _request = FetchRequest(entity: T.entity(), sortDescriptors: [])
+        self.content = content
     }
-}
-
-struct DynamicFilteredView_Previews: PreviewProvider {
-    static var previews: some View {
-        DynamicFilteredView()
+    
+    var body: some View {
+        Group {
+            if request.isEmpty {
+                Text("Список задач пуст")
+                    .font(.system(size: 16))
+                    .fontWeight(.light)
+                    .offset(y: 100)
+            } else {
+                ForEach(request, id: \.objectID) { object in
+                    self.content(object)
+                }
+            }
+        }
     }
 }
