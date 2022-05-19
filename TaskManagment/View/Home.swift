@@ -89,7 +89,10 @@ struct Home: View {
             , alignment: .bottomTrailing
         )
         .sheet(isPresented: $taskModel.addNewTask) {
+            taskModel.editTask = nil
+        } content: {
             NewTask()
+                .environmentObject(taskModel)
         }
     }
     
@@ -113,12 +116,32 @@ struct Home: View {
         HStack(alignment: editButton?.wrappedValue == .active ? .center : .top, spacing: 30) {
             
             if editButton?.wrappedValue == .active {
-                Button {
-                    // Deleting Task
-                } label: {
-                    Image(systemName: "minus.circle.fill")
-                        .font(.title2)
-                        .foregroundColor(.red)
+                
+                // Edit Button for current and future tasks
+                VStack(spacing: 10) {
+                    
+                    if task.taskDate?.compare(Date()) == .orderedDescending || Calendar.current.isDateInToday(task.taskDate ?? Date()) {
+                        Button {
+                            taskModel.editTask = task
+                            taskModel.addNewTask.toggle()
+                        } label: {
+                            Image(systemName: "pencil.circle.fill")
+                                .font(.title)
+                                .foregroundColor(.primary)
+                        }
+
+                    }
+                    Button {
+                        // MARK: Deleting Task
+                        context.delete(task)
+                        
+                        // Saving
+                        try? context.save()
+                    } label: {
+                        Image(systemName: "minus.circle.fill")
+                            .font(.title)
+                            .foregroundColor(.red)
+                    }
                 }
             } else {
                 VStack(spacing: 10) {
@@ -164,7 +187,7 @@ struct Home: View {
                         if !task.isCompleted {
                             
                             Button {
-                                // Updating status
+                                // MARK: Updating Task
                                 task.isCompleted = true
                                 
                                 // Saving
